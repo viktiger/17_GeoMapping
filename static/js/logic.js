@@ -1,4 +1,4 @@
-// Earthquakes & Tectonic Plates GeoJSON URL Variables
+// Earthquakes & Tectonic Plates GeoJSON URL Variablesearthquakes
 // All Month
 // var earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 // All Day
@@ -13,21 +13,27 @@ var tectonicURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/maste
 //   createFeatures(data.features);
 // });
 
+// // Perform a GET request to the query URL
+// d3.json(tectonicURL).then(function (tectonicData) {
+//   console.log(tectonicData);
+//   createFaultlines(tectonicData.features);
+// });
+
 // Combining GET requests to both the query URLs
-d3.json(earthquakeURL).then(function(data){
-    d3.json(tectonicURL).then(function(tectonicData){
+d3.json(earthquakeURL).then(function (data) {
+  d3.json(tectonicURL).then(function (tectonicData) {
     console.log("NESTED")
     console.log(data)
-    createFeatures(data.features);
     console.log(tectonicData)
+    createFeatures(data.features, tectonicData.features);
   })
 })
 // ---------------------------------------------------------------------------------------------------- //
 
 // ---------------------------------------------------------------------------------------------------- //
 // // Create two LayerGroups: earthquakes & tectonicPlates
-var Earthquakes = new L.LayerGroup();
-var TectonicPlates = new L.LayerGroup();
+var earthquakes = new L.LayerGroup();
+var tectonicPlates = new L.LayerGroup();
 
 // The circles were too small so I had to multiply by a large number so that they could be more visible on the map
 function circleRadius(magnitude) {
@@ -70,7 +76,7 @@ function circleColor(magnitude) {
 // ---------------------------------------------------------------------------------------------------- //
 
 // ---------------------------------------------------------------------------------------------------- //
-function createFeatures(earthquakeData) {
+function createFeatures(earthquakeData, tectonicData) {
 
   // Define a function we want to run once for each feature in the features array
   // Give each feature a popup describing the place and time of the earthquake
@@ -97,30 +103,19 @@ function createFeatures(earthquakeData) {
   var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature,
     pointToLayer: pointToLayer
-  });
+    });
 
-  // Sending our earthquakes layer to the createMap function
-  createMap(earthquakes);
+  var tectonicPlates = L.geoJSON(tectonicData, {
+    color: "yellow",
+    weight: 1.5});
+
+  // Using the earthquakes & tectonicPlates layer to the createMap function
+  createMap(earthquakes, tectonicPlates);
 }
 // ---------------------------------------------------------------------------------------------------- //
 
-// function createFeatures2(tectonicData) {
-// var TectonicPlates = L.geoJSON(tectonicData)};
-// createMap(TectonicPlates);
-
-d3.json(tectonicURL, function(tectonicData) {
-  // Create a GeoJSON Layer the plateData
-  L.geoJson(tectonicData, {
-      color: "#DC143C",
-      weight: 2
-  // Add plateData to tectonicPlates LayerGroups 
-  }).addTo(TectonicPlates);
-  // Add tectonicPlates Layer to the Map
-  TectonicPlates.addTo(myMap);
-});
-
 // ---------------------------------------------------------------------------------------------------- //
-function createMap(earthquakes) {
+function createMap(earthquakes, tectonicPlates) {
 
   // Define satellite, streetmap and darkmap layers
   var satellite = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
@@ -153,7 +148,7 @@ function createMap(earthquakes) {
 
   // Create overlay object to hold our overlay layer
   var overlayMaps = {
-    "TectonicPlates": TectonicPlates,
+    "TectonicPlates": tectonicPlates,
     "Earthquakes": earthquakes
   };
 
@@ -163,40 +158,29 @@ function createMap(earthquakes) {
       36, 0
     ],
     zoom: 2,
-    // layers: [satellite, earthquakes, tectonicplates]
-    layers: [satellite, earthquakes, TectonicPlates]
+    layers: [satellite, earthquakes, tectonicPlates]
   });
 
-  // Create a layer control
-  // Pass in our baseMaps and overlayMaps
-  // Add the layer control to the map
-  L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
-  }).addTo(myMap);
+  // Create a layer control + Pass in our baseMaps and overlayMaps + Add the layer control to the map
+  L.control.layers(baseMaps, overlayMaps, tectonicPlates).addTo(myMap);
 
 
-  // L.circle([50.5, 30.5], {
-  //   fillColor: "#FF4500",
-  //   radius:300
-  // }).addTo(myMap);
 
-  // // Set Up Legend
-  // var legend = L.control({ position: "bottomright" });
-  // legend.onAdd = function() {
-  //     var div = L.DomUtil.create("div", "info legend"), 
-  //     magnitudeLevels = [0, 1, 2, 3, 4, 5];
+  // Create legend
+  var legend = L.control({ position: 'bottomright' });
 
-  //     div.innerHTML += "<h3>Magnitude</h3>"
+  legend.onAdd = function (myMap) {
+    var div = L.DomUtil.create('div', 'info legend'),
+      magnitudes = [0, 1, 2, 3, 4, 5],
+      labels = ["0-1", "1-2", "2-3", "3-4", "4-5", "5+"];
 
-  //     for (var i = 0; i < magnitudeLevels.length; i++) {
-  //         div.innerHTML +=
-  //             '<i style="background: ' + chooseColor(magnitudeLevels[i] + 1) + '"></i> ' +
-  //             magnitudeLevels[i] + (magnitudeLevels[i + 1] ? '&ndash;' + magnitudeLevels[i + 1] + '<br>' : '+');
-  //     }
-  //     return div;
-  // };
-  // // Add Legend to the Map
-  // legend.addTo(myMap);
-
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < magnitudes.length; i++) {
+      div.innerHTML += '<i style="background:' +
+        circleColor(magnitudes[i] + 1) + '"></i> ' + magnitudes[i] + (magnitudes[i + 1] ? '&ndash;' + magnitudes[i + 1] + '<br>' : '+');
+    }
+    return div;
+  };
+  legend.addTo(myMap);
 }
 // ---------------------------------------------------------------------------------------------------- //
