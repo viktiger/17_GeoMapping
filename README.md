@@ -8,13 +8,10 @@
 (2) Content:\
 (2a) index.html\
 \
-(2b) assets/css/d3Style.css\
-(2c) assets/css/style.css\
+(2b) static/js/logic.js\
+(2c) static/js/config.js\
 \
-(2d) assets/data/data.csv\
-\
-(2e) assets/js/.eslintrc.json\
-(2f) assets/js/app.js
+(2d) static/css/style.css\
 
 ## **Project Description & Background:**
 Using the USGS United States Geological Survey data set to visualise 'All Earthquakes from the Past 7 Days' and the relationship between tectonic plates and seismic activity.
