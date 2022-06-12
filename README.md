@@ -9,8 +9,10 @@
 
 ## **Project Description & Background:**
 Using the USGS United States Geological Survey data set to visualise 'All Earthquakes from the Past 7 Days' and the relationship between tectonic plates and seismic activity.
+
 \
-Dataset1: [[U.S. Census Bureau and the Behavioural Risk Factor Surveillance System dataset](https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml)](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)\
+Dataset1: [[U.S. Census Bureau and the Behavioural Risk Factor Surveillance System dataset](https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml)](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
+
 \
 Dataset2: https://github.com/fraxen/tectonicplates
 
