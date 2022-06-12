@@ -1,6 +1,4 @@
-# VS_Assignment17_GeoMapping
-
-![GeoMappingTitlePage](GeoMappingTitlePage.JPG)
+# 17_GeoMapping
 
 ## **Project Parts:**
 (1) Background Images: GeoMappingTitlePage.jpg\
@@ -23,7 +21,7 @@ Dataset2: https://github.com/fraxen/tectonicplates
 ## **Project Charter:**
 (1) Display script from repository\
 \
-(2) Display website https://viktiger.github.io/VS_Assignment17_GeoMapping/
+(2) Display website https://viktiger.github.io/17_GeoMapping/
 
 ## **Coding Languages:**
 (1) Javascript\
