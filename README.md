@@ -1,15 +1,11 @@
-# 17_GeoMapping
+# 17_Leaflet
 
 ## **Project Parts:**
-(1) Background Images: GeoMappingTitlePage.jpg\
+(1) index.html\
 \
-(2) Content:\
-(2a) index.html\
-\
-(2b) static/js/logic.js\
-(2c) static/js/config.js\
-\
-(2d) static/css/style.css\
+(2) static/js/logic.js\
+(3) static/js/config.js\
+(4) static/css/style.css\
 
 ## **Project Description & Background:**
 Using the USGS United States Geological Survey data set to visualise 'All Earthquakes from the Past 7 Days' and the relationship between tectonic plates and seismic activity.
