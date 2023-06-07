@@ -1,4 +1,4 @@
-# 17_Leaflet
+# 17_Leaflet_PriorWeekEarthquakes
 
 ## **Project Parts:**
 (1) index.html\
