@@ -19,7 +19,7 @@ Dataset2: https://github.com/fraxen/tectonicplates
 ## **Project Charter:**
 (1) Display script from repository\
 \
-(2) Display website https://viktiger.github.io/17_Leaflet/
+(2) Display website https://viktiger.github.io/17_Leaflet_PriorWeekEarthquakes/
 
 ## **Coding Languages:**
 (1) Javascript\
